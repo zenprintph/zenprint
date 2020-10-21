@@ -1,0 +1,18 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: zenprint-service
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost/zenprint
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    root: INFO
