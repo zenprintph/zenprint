@@ -24,14 +24,11 @@ public class UserService {
 
     public User saveUser(UserRequest userRequest) {
 
-        User user =
-                User.builder()
+        return userRepository.save(User.builder()
                 .username(userRequest.getUsername())
                 .password(passwordEncoder.encode(userRequest.getPassword()))
-                .active(userRequest.getActive())
+                .active(true)
                 .roles(userRequest.getRoles())
-                .build();
-
-        return userRepository.save(user);
+                .build());
     }
 }
