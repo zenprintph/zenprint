@@ -21,14 +21,15 @@ public class NotFoundException extends RuntimeException {
     }
 
     public enum Error {
-        PRODUCT_NOT_FOUND(ResponseCode.GEN404);
+        PRODUCT_NOT_FOUND(ResponseCode.GEN404, ExceptionMessage.PRODUCT_NOT_FOUND),
+        SALES_NOT_FOUND(ResponseCode.GEN404, ExceptionMessage.SALES_NOT_FOUND);
 
         private final ResponseCode code;
         private final String message;
 
-        Error(ResponseCode code) {
+        Error(ResponseCode code, String message) {
             this.code = code;
-            this.message = ExceptionMessage.PRODUCT_NOT_FOUND;
+            this.message = message;
         }
 
         public NotFoundException create() {

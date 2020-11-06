@@ -10,4 +10,5 @@ public final class ExceptionMessage {
             "Don't worry. We're on it! Please check again later. (%s)";
 
     public static final String PRODUCT_NOT_FOUND = "Sorry! This product is no longer existing.";
+    public static final String SALES_NOT_FOUND = "No sales yet for this user";
 }
