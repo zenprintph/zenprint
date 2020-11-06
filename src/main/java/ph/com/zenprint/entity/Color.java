@@ -9,12 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 11/5/2020.
  */
 
 @Builder
@@ -23,24 +22,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_package")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @Column(name = "color_name", nullable = false)
+    private String colorName;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @Column(name = "hex_code", nullable = false)
+    private String hexCode;
 
-    @Column(name = "product_code", nullable = false, unique = true)
+    @Column(name = "product_code", nullable = false)
     private String productCode;
-
-    @Column(name = "product_type")
-    private String productType;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

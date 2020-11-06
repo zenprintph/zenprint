@@ -35,7 +35,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority(Roles.ADMIN.name())
-                .antMatchers("/user/**").hasAnyAuthority(Roles.ADMIN.name(),
+                .antMatchers("/user/**","/zenprint/**").hasAnyAuthority(Roles.ADMIN.name(),
                     Roles.USER.name())
                 .antMatchers("/","/register")
                 .permitAll()

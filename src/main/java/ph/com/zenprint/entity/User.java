@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Choy
@@ -37,6 +38,15 @@ public class User {
 
     @Column(name = "roles", nullable = false)
     private String roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Package> packages;
+
+    @OneToMany(mappedBy = "createdBy")
+    private List<DeliveryOrder> deliveryOrders;
+
+    @OneToMany(mappedBy = "soldTo")
+    private List<Sale> sales;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

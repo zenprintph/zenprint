@@ -3,18 +3,19 @@ package ph.com.zenprint.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 11/3/2020.
  */
 
 @Builder
@@ -23,24 +24,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Package {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_package")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @OneToMany
+    @JoinTable(name = "package_product", joinColumns = @JoinColumn(name = "id_package"),
+            inverseJoinColumns = @JoinColumn(name = "id_product"))
+    private List<Product> products;
 
-    @Column(name = "product_code", nullable = false, unique = true)
-    private String productCode;
-
-    @Column(name = "product_type")
-    private String productType;
+    @Column(name = "num_quantity", nullable = false)
+    private Integer quantity;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

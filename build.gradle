@@ -25,6 +25,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.1'
 	compileOnly 'org.projectlombok:lombok'
+	compile group: 'io.zipkin.brave', name: 'brave', version: '5.12.7'
+	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-sleuth', version: '2.2.4.RELEASE'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {

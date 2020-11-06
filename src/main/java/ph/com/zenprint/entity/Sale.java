@@ -11,10 +11,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 11/6/2020.
  */
 
 @Builder
@@ -23,24 +24,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class Sale {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_sale")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @OneToMany(mappedBy = "sale")
+    private List<SalesDetail> salesDetails;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @ManyToOne
+    @JoinColumn(name = "id_user", nullable = false)
+    private User soldTo;
 
-    @Column(name = "product_code", nullable = false, unique = true)
-    private String productCode;
-
-    @Column(name = "product_type")
-    private String productType;
+    @Column(name = "grand_total", nullable = false)
+    private BigDecimal grandTotal;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

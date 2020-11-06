@@ -7,5 +7,6 @@ package ph.com.zenprint.constant;
 public enum ResponseCode {
 
     GEN200,
-    GEN500
+    GEN500,
+    GEN404
 }

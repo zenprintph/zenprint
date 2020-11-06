@@ -23,3 +23,9 @@ log:
   before-request-prefix: "Before Request:"
   after-request-prefix: "After Request:"
   after-response-prefix: "Response:"
+
+cors:
+  urls: '/zenprint/**'
+  origin: '*'
+  allowed:
+    methods: GET,POST,PUT,PATCH,DELETE

@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 11/6/2020.
  */
 
 @Builder
@@ -23,24 +23,26 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class SalesDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_sales_detail")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @ManyToOne
+    @JoinColumn(name = "id_sale", nullable = false)
+    private Sale sale;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @OneToOne
+    @JoinColumn(name = "id_product")
+    private Product product;
 
-    @Column(name = "product_code", nullable = false, unique = true)
-    private String productCode;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @Column(name = "product_type")
-    private String productType;
+    @Column(name = "subtotal", nullable = false)
+    private BigDecimal subtotal;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

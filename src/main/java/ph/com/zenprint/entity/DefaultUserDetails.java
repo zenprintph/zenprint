@@ -31,7 +31,6 @@ public class DefaultUserDetails implements UserDetails {
         this.active = user.getActive();
         this.authorities = Arrays.stream(user.getRoles().split(","))
                 .map(SimpleGrantedAuthority::new)
-
                 .collect(Collectors.toList());
     }
 
