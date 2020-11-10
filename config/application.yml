@@ -1,6 +1,9 @@
 server:
   port: 9090
 
+auth:
+  secret-key: gpBKq8
+
 spring:
   application:
     name: zenprint-service

@@ -1,12 +1,15 @@
 package ph.com.zenprint.controller;
 
 import brave.Tracer;
+import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ph.com.zenprint.constant.ExceptionMessage;
 import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.constant.Severity;
@@ -25,7 +28,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Slf4j
 @ControllerAdvice
-public class RestExceptionHandler {
+public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     private final Tracer tracer;
 
@@ -42,6 +45,18 @@ public class RestExceptionHandler {
     public ResponseEntity<BaseResponse<Object>> handleNotFoundException(NotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(buildBaseResponse(e.getResponseCode(), e.getMessage()));
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<BaseResponse<Object>> handleBadCredentialsException(BadCredentialsException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(buildBaseResponse(ResponseCode.GEN401, e.getMessage()));
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<BaseResponse<Object>> handleSignatureException(SignatureException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(buildBaseResponse(ResponseCode.GEN401, e.getMessage()));
     }
 
     private BaseResponse<Object> buildBaseResponse(ResponseCode code, String message) {

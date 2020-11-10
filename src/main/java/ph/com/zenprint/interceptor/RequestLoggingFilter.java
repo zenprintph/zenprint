@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.MDC;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 import ph.com.zenprint.property.LogProperty;
+import ph.com.zenprint.service.AuthenticationService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -33,6 +35,8 @@ import java.util.Optional;
 @Component
 public class RequestLoggingFilter extends OncePerRequestFilter {
 
+    private AuthenticationService authenticationService;
+
     private final List<MediaType> VISIBLETYPES = Arrays.asList(
             MediaType.valueOf("text/*"),
             MediaType.APPLICATION_JSON,
@@ -47,6 +51,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        authenticationService.doRequestAuthentication(request);
 
         if (isAsyncDispatch(request)) {
             filterChain.doFilter(request, response);
@@ -178,5 +183,10 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
         } else {
             return new ContentCachingResponseWrapper(response);
         }
+    }
+
+    @Autowired
+    public void setAuthenticationService(AuthenticationService authenticationService) {
+        this.authenticationService = authenticationService;
     }
 }
