@@ -22,13 +22,13 @@ logging:
 
 log:
   pattern: "%d{yyyy-MM-dd HH:mm:ss} [${spring.application.name},%X{X-B3-TraceId:-},%X{X-B3-SpanId:-},%X{X-Span-Export:-}] %5p ${PID} [%t] [%logger{0}] - %msg%n"
-  path: out/logs/zenprint.log
+  path: out\logs\zenprint.log
   before-request-prefix: "Before Request:"
   after-request-prefix: "After Request:"
   after-response-prefix: "Response:"
 
 cors:
-  urls: '/zenprint/**'
+  urls: '*'
   origin: '*'
   allowed:
     methods: GET,POST,PUT,PATCH,DELETE

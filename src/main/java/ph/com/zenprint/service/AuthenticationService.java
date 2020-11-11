@@ -69,6 +69,16 @@ public class AuthenticationService {
         }
     }
 
+    public boolean validateToken(String authorization) {
+
+        String jwt = authorization.substring(7);
+        String username = jwtUtil.extractUsername(jwt);
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+
+        return jwtUtil.validateToken(jwt, userDetails);
+    }
+
     @Autowired
     public void setAuthenticationManager(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;

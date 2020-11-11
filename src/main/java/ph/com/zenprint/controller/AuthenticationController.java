@@ -1,10 +1,7 @@
 package ph.com.zenprint.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.dto.AuthenticationRequest;
 import ph.com.zenprint.dto.BaseResponse;
@@ -27,6 +24,14 @@ public class AuthenticationController {
         return BaseResponse.<String>builder()
                 .code(ResponseCode.GEN200)
                 .data(authenticationService.authenticate(request))
+                .build();
+    }
+
+    @GetMapping
+    public BaseResponse<Boolean> validateToken(@RequestHeader("authorization") String authorization) {
+        return BaseResponse.<Boolean>builder()
+                .code(ResponseCode.GEN200)
+                .data(authenticationService.validateToken(authorization))
                 .build();
     }
 }
