@@ -1,9 +1,12 @@
 package ph.com.zenprint.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import ph.com.zenprint.dto.ProductDto;
+import ph.com.zenprint.dto.ProductRequest;
 import ph.com.zenprint.entity.Product;
+import ph.com.zenprint.exception.DataAlreadyExistException;
 import ph.com.zenprint.exception.NotFoundException;
 import ph.com.zenprint.repository.ProductRepository;
 
@@ -33,6 +36,21 @@ public class ProductService {
         }
 
         throw NotFoundException.Error.PRODUCT_NOT_FOUND.create();
+    }
+
+    public void addProduct(ProductRequest request) {
+        Product product = Product.builder()
+                .productCode(request.getProductCode())
+                .productName(request.getProductName())
+                .productType(request.getProductType())
+                .unitPrice(request.getUnitPrice())
+                .build();
+
+        try {
+            productRepository.save(product);
+        } catch (DataIntegrityViolationException ex) {
+            throw DataAlreadyExistException.Error.PRODUCT_CODE_EXIST.create();
+        }
     }
 
     public List<ProductDto> getAllProducts() {

@@ -1,13 +1,11 @@
 package ph.com.zenprint.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.dto.BaseResponse;
 import ph.com.zenprint.dto.ProductDto;
+import ph.com.zenprint.dto.ProductRequest;
 import ph.com.zenprint.service.ProductService;
 
 import java.util.List;
@@ -38,6 +36,16 @@ public class ProductController {
         return BaseResponse.<List<ProductDto>>builder()
                 .code(ResponseCode.GEN200)
                 .data(productService.getAllProducts())
+                .build();
+    }
+
+    @PostMapping("/add")
+    public BaseResponse<Void> addProduct(@RequestBody ProductRequest request) {
+
+        productService.addProduct(request);
+
+        return BaseResponse.<Void>builder()
+                .code(ResponseCode.GEN200)
                 .build();
     }
 }

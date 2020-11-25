@@ -15,6 +15,7 @@ import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.constant.Severity;
 import ph.com.zenprint.dto.BaseResponse;
 import ph.com.zenprint.dto.ErrorDto;
+import ph.com.zenprint.exception.DataAlreadyExistException;
 import ph.com.zenprint.exception.NotFoundException;
 
 import java.time.LocalDateTime;
@@ -57,6 +58,12 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<BaseResponse<Object>> handleSignatureException(SignatureException e) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(buildBaseResponse(ResponseCode.GEN401, e.getMessage()));
+    }
+
+    @ExceptionHandler(DataAlreadyExistException.class)
+    public ResponseEntity<BaseResponse<Object>> handleDataAlreadyExistException(DataAlreadyExistException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(buildBaseResponse(ResponseCode.GEN409, e.getMessage()));
     }
 
     private BaseResponse<Object> buildBaseResponse(ResponseCode code, String message) {

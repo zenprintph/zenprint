@@ -41,11 +41,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-                .addFilterBefore(corsFilter, SessionManagementFilter.class)
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAnyAuthority(Roles.ADMIN.name())
                 .antMatchers("/user/**", "/zenprint/**").hasAnyAuthority(Roles.ADMIN.name(), Roles.USER.name())
-                .antMatchers("/", "/register", "/authenticate")
+                .antMatchers("/", "/register", "/authenticate","/province")
                 .permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()
@@ -55,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
 
         http.addFilterBefore(requestLoggingFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterAfter(corsFilter, RequestLoggingFilter.class);
     }
 
     @Override

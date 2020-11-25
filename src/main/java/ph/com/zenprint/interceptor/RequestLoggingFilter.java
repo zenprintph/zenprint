@@ -44,6 +44,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
             MediaType.APPLICATION_FORM_URLENCODED,
             MediaType.valueOf("application/*+json"),
             MediaType.valueOf("application/*+xml"),
+            MediaType.valueOf("application/x-www-form-urlencoded"),
             MediaType.MULTIPART_FORM_DATA
     );
 

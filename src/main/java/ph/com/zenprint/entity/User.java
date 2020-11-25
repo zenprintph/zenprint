@@ -48,6 +48,9 @@ public class User {
     @OneToMany(mappedBy = "soldTo")
     private List<Sale> sales;
 
+    @Column(name = "store_name", unique = true)
+    private String storeName;
+
     @CreationTimestamp
     @Column(name = "dtime_created")
     private LocalDateTime createDated;

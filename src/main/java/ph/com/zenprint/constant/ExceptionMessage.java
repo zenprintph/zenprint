@@ -11,4 +11,6 @@ public final class ExceptionMessage {
 
     public static final String PRODUCT_NOT_FOUND = "Sorry! This product is no longer existing.";
     public static final String SALES_NOT_FOUND = "No sales yet for this user";
+
+    public static final String PRODUCT_CODE_EXIST = "The product code already exist";
 }

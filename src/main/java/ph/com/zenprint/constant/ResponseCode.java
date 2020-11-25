@@ -9,5 +9,6 @@ public enum ResponseCode {
     GEN200,
     GEN500,
     GEN404,
-    GEN401
+    GEN401,
+    GEN409
 }
