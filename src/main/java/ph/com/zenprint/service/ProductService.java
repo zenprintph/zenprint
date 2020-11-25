@@ -1,5 +1,6 @@
 package ph.com.zenprint.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,8 @@ import java.util.stream.Collectors;
 public class ProductService {
 
     private final ProductRepository productRepository;
+
+    private final ObjectMapper mapper;
 
     public ProductDto getProductByCode(String productCode) {
 
@@ -55,7 +58,7 @@ public class ProductService {
 
     public List<ProductDto> getAllProducts() {
         return productRepository.findAll()
-                .stream().map(this::mapToProductDto)
+                .stream().map(product -> mapper.convertValue(product, ProductDto.class))
                 .collect(Collectors.toList());
     }
 

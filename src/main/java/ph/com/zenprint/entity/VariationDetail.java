@@ -1,6 +1,6 @@
 package ph.com.zenprint.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,11 +12,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 11/25/2020.
  */
 
 @Builder
@@ -25,28 +24,23 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class VariationDetail {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_variation_detail")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @Column(name = "variation_name", nullable = false)
+    private String variationName;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @Column(name = "variation_price", nullable = false)
+    private BigDecimal variationPrice;
 
-    @Column(name = "product_code", nullable = false, unique = true)
-    private String productCode;
-
-    @Column(name = "product_type")
-    private String productType;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product")
-    private List<Variation> variations;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "id_variation")
+    private Variation variation;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

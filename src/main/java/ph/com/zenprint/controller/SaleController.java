@@ -9,6 +9,7 @@ import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.dto.BaseResponse;
 import ph.com.zenprint.dto.SalesDto;
 import ph.com.zenprint.service.SaleService;
+import ph.com.zenprint.util.JwtUtil;
 
 import java.util.List;
 
@@ -24,12 +25,14 @@ public class SaleController {
 
     private final SaleService saleService;
 
+    private final JwtUtil jwtUtil;
+
     @GetMapping("/get-sales")
-    public BaseResponse<List<SalesDto>> getSalesByUsername(@RequestHeader("username") String username) {
+    public BaseResponse<List<SalesDto>> getSalesByUsername(@RequestHeader("auth") String auth) {
 
         return BaseResponse.<List<SalesDto>>builder()
                 .code(ResponseCode.GEN200)
-                .data(saleService.getSalesByUsername(username))
+                .data(saleService.getSalesByUsername(jwtUtil.extractUsername(auth)))
                 .build();
     }
 }
