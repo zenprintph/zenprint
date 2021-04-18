@@ -5,26 +5,20 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-
-import java.util.List;
-
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 12/14/2020.
  */
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class ProductDto {
+public class ColorDto {
 
     private Long id;
 
-    private String productName;
+    private String colorName;
 
-    private BigDecimal unitPrice;
-
-    private List<VariationDto> variations;
+    private String hexCode;
 }

@@ -1,6 +1,5 @@
 package ph.com.zenprint.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,11 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * @author Choy
- * @date 11/2/2020.
+ * @date 12/27/2020.
  */
 
 @Builder
@@ -25,31 +22,24 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Product {
+public class SysFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_product")
+    @Column(name = "id_file")
     private Long id;
 
-    @Column(name = "product_name", nullable = false)
-    private String productName;
+    @Column(name = "file_name")
+    private String fileName;
 
-    @Column(name = "unit_price", nullable = false)
-    private BigDecimal unitPrice;
+    @Column(name = "file_path")
+    private String filePath;
 
-    @Column(name = "product_code", nullable = false, unique = true)
-    private String productCode;
+    @Column(name = "file_size")
+    private Long fileSize;
 
-    @Column(name = "product_type")
-    private String productType;
-
-    @Column(name = "is_available")
-    private boolean isAvailable;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product")
-    private List<Variation> variations;
+    @Column(name = "file_type")
+    private String fileType;
 
     @CreationTimestamp
     @Column(name = "dtime_created")

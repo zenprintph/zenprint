@@ -6,29 +6,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.dto.BaseResponse;
-import ph.com.zenprint.dto.ProvinceDto;
-import ph.com.zenprint.service.ProvinceService;
+import ph.com.zenprint.dto.ColorDto;
+import ph.com.zenprint.service.ColorService;
 
 import java.util.List;
 
 /**
  * @author Choy
- * @date 11/11/2020.
+ * @date 12/14/2020.
  */
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/provinces")
-public class ProvinceController {
+@RequestMapping("/colors")
+public class ColorController {
 
-    private final ProvinceService provinceService;
+    private final ColorService colorService;
 
     @GetMapping
-    public BaseResponse<List<ProvinceDto>> getAllProvinces() {
-
-        return BaseResponse.<List<ProvinceDto>>builder()
+    public BaseResponse<List<ColorDto>> getAllColors() {
+        return BaseResponse.<List<ColorDto>>builder()
                 .code(ResponseCode.GEN200)
-                .data(provinceService.getAllProvinces())
+                .data(colorService.getAllColors())
                 .build();
     }
 }

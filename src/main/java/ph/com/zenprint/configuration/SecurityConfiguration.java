@@ -42,9 +42,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasAnyAuthority(Roles.ADMIN.name())
-                .antMatchers("/user/**", "/zenprint/**").hasAnyAuthority(Roles.ADMIN.name(), Roles.USER.name())
-                .antMatchers("/", "/register", "/authenticate","/province")
+//                .antMatchers("/admin/**").hasAnyAuthority(Roles.ADMIN.name())
+//                .antMatchers("/user/**", "/zenprint/**").hasAnyAuthority(Roles.ADMIN.name(), Roles.USER.name())
+                .antMatchers("/authenticate", "/provinces", "/colors", "/file", "/zenprint/**")
                 .permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()

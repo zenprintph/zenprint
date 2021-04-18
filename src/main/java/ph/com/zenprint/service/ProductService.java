@@ -41,6 +41,19 @@ public class ProductService {
         throw NotFoundException.Error.PRODUCT_NOT_FOUND.create();
     }
 
+    public List<ProductDto> getProductByType(String productType) {
+
+        Optional<List<Product>> optionalProducts = productRepository.findByProductType(productType);
+
+        if (optionalProducts.isPresent()) {
+            return optionalProducts.get().stream()
+                    .map(this::mapToProductDto)
+                    .collect(Collectors.toList());
+        }
+
+        throw NotFoundException.Error.PRODUCT_NOT_FOUND.create();
+    }
+
     public void addProduct(ProductRequest request) {
         Product product = Product.builder()
                 .productCode(request.getProductCode())
@@ -64,6 +77,7 @@ public class ProductService {
 
     public ProductDto mapToProductDto(Product product) {
         return ProductDto.builder()
+                .id(product.getId())
                 .productName(product.getProductName())
                 .unitPrice(product.getUnitPrice())
                 .build();

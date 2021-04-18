@@ -22,12 +22,21 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping("/product")
-    public BaseResponse<ProductDto> getProductByCode (@RequestParam("code") String code) {
+    @GetMapping("/code/{productCode}")
+    public BaseResponse<ProductDto> getProductByCode(@PathVariable("productCode") String code) {
 
         return BaseResponse.<ProductDto>builder()
                 .code(ResponseCode.GEN200)
                 .data(productService.getProductByCode(code))
+                .build();
+    }
+
+    @GetMapping("/type/{productType}")
+    public BaseResponse<List<ProductDto>> getProductByType(@PathVariable("productType") String productType) {
+
+        return BaseResponse.<List<ProductDto>>builder()
+                .code(ResponseCode.GEN200)
+                .data(productService.getProductByType(productType))
                 .build();
     }
 
