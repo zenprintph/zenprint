@@ -6,6 +6,7 @@ import ph.com.zenprint.constant.ResponseCode;
 import ph.com.zenprint.dto.AuthenticationRequest;
 import ph.com.zenprint.dto.BaseResponse;
 import ph.com.zenprint.service.AuthenticationService;
+import ph.com.zenprint.service.UserService;
 
 /**
  * @author Choy
@@ -18,6 +19,7 @@ import ph.com.zenprint.service.AuthenticationService;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+    private final UserService userService;
 
     @PostMapping
     public BaseResponse<String> authenticate(@RequestBody AuthenticationRequest request) {
@@ -32,6 +34,14 @@ public class AuthenticationController {
         return BaseResponse.<Boolean>builder()
                 .code(ResponseCode.GEN200)
                 .data(authenticationService.validateToken(authorization))
+                .build();
+    }
+
+    @PostMapping("/validate")
+    public BaseResponse<Boolean> isVerified(@RequestBody AuthenticationRequest request) {
+        return BaseResponse.<Boolean>builder()
+                .code(ResponseCode.GEN200)
+                .data(userService.isVerified(request.getUsername()))
                 .build();
     }
 }

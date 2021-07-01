@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.session.SessionManagementFilter;
 import ph.com.zenprint.constant.Roles;
 import ph.com.zenprint.interceptor.CorsFilter;
 import ph.com.zenprint.interceptor.RequestLoggingFilter;
@@ -44,7 +43,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/admin/**").hasAnyAuthority(Roles.ADMIN.name())
 //                .antMatchers("/user/**", "/zenprint/**").hasAnyAuthority(Roles.ADMIN.name(), Roles.USER.name())
-                .antMatchers("/authenticate", "/provinces", "/colors", "/file", "/zenprint/**")
+                .antMatchers("/authenticate/**", "/provinces", "/colors", "/file", "/zenprint/**",
+                        "/register", "/order/test", "/price/**")
                 .permitAll()
                 .anyRequest().authenticated().and()
                 .exceptionHandling().and().sessionManagement()

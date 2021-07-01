@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ph.com.zenprint.constant.ResponseCode;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -25,7 +26,8 @@ import java.util.List;
         "code",
         "message",
         "data",
-        "errors"
+        "errors",
+        "timestamp"
 })
 public class BaseResponse<T> {
 
@@ -40,4 +42,7 @@ public class BaseResponse<T> {
 
     @JsonProperty("errors")
     private List<ErrorDto> errors;
+
+    @JsonProperty("timestamp")
+    private LocalDateTime timestamp;
 }

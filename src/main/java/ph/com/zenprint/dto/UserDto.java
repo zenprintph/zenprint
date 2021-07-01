@@ -5,23 +5,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Choy
- * @date 10/22/2020.
+ * @date 4/19/2021.
  */
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRequest {
+public class UserDto {
 
     private String username;
-    private String password;
-    private Boolean active;
-    private String roles;
     private String firstName;
     private String lastName;
-    private String storeName;
-    private String email;
+    private Boolean active;
+    private LocalDateTime createdDate;
 }

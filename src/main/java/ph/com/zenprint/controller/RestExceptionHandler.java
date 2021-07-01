@@ -1,9 +1,11 @@
 package ph.com.zenprint.controller;
 
 import brave.Tracer;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -27,7 +29,7 @@ import java.util.Collections;
  */
 
 @RequiredArgsConstructor
-@Slf4j
+@Log4j2
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -62,6 +64,19 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(DataAlreadyExistException.class)
     public ResponseEntity<BaseResponse<Object>> handleDataAlreadyExistException(DataAlreadyExistException e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(buildBaseResponse(ResponseCode.GEN409, e.getMessage()));
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<BaseResponse<Object>> handleExpiredJwtException(ExpiredJwtException e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(buildBaseResponse(ResponseCode.GEN401, e.getMessage()));
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<BaseResponse<Object>> handleDataIntegrityViolationException(
+            DataIntegrityViolationException e) {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(buildBaseResponse(ResponseCode.GEN409, e.getMessage()));
     }

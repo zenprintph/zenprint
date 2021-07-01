@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import ph.com.zenprint.constant.DesignType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
  * @author Choy
- * @date 12/27/2020.
+ * @date 4/19/2021.
  */
 
 @Builder
@@ -24,36 +23,27 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class SysFile {
+public class Packaging {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_file")
+    @Column(name = "id_packaging")
     private Long id;
 
-    @Column(name = "file_name")
-    private String fileName;
+    @Column(name = "text_type")
+    private String type;
 
-    @Column(name = "file_path")
-    private String filePath;
+    @Column(name = "quantity")
+    private Integer quantity;
 
-    @Column(name = "file_size")
-    private Long fileSize;
-
-    @Column(name = "file_type")
-    private String fileType;
-
-    @Column(name = "design_type")
-    private DesignType designType;
-
-    @ManyToOne
-    @JsonBackReference
+    @OneToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
     @CreationTimestamp
     @Column(name = "dtime_created")
-    private LocalDateTime createDated;
+    private LocalDateTime createdDate;
 
     @UpdateTimestamp
     @Column(name = "dtime_updated")

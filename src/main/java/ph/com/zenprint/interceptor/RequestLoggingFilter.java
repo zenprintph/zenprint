@@ -1,7 +1,7 @@
 package ph.com.zenprint.interceptor;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.util.Strings;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +30,14 @@ import java.util.Optional;
  * @date 11/2/2020.
  */
 
-@Slf4j
+@Log4j2
 @RequiredArgsConstructor
 @Component
 public class RequestLoggingFilter extends OncePerRequestFilter {
 
     private AuthenticationService authenticationService;
 
-    private final List<MediaType> VISIBLETYPES = Arrays.asList(
+    private final List<MediaType> visibleTypes = Arrays.asList(
             MediaType.valueOf("text/*"),
             MediaType.APPLICATION_JSON,
             MediaType.APPLICATION_XML,
@@ -142,7 +142,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
     private void logContent(byte[] content, String contentType, String contentEncoding,
                             HttpStatus status, String prefix, long responseTime) {
         MediaType mediaType = MediaType.valueOf(contentType);
-        boolean visible = VISIBLETYPES.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
+        boolean visible = visibleTypes.stream().anyMatch(visibleType -> visibleType.includes(mediaType));
 
         if(visible) {
             try {
